@@ -8,38 +8,35 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>webrtc中rtcp码率控制分析 | 近卫高地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="webrtc中rtcp反馈与码率控制模块分析[TOC]
-0. 参考文档[1] google congestion control
+  <meta name="description" content="0. 参考文档[1] google congestion control
 1. 简介webrtc的带宽估计分为两部分，一部分为发送端根据rtcp反馈信息进行反馈，另一部分为接收端根据收到的rtp数据进行相应的码率估计[1]。本文先分析发送端根据rtcp反馈信息进行码率调整的部分代码。
 
 具体计算公式:
 2. 代码结构2.1 类关系
-rtp_s">
+rtp_stream_receiver中有一个继承自抽象类RtpR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webrtc中rtcp码率控制分析">
 <meta property="og:url" content="http://yoursite.com/2017/05/09/webrtc中rtcp码率控制分析/index.html">
 <meta property="og:site_name" content="近卫高地">
-<meta property="og:description" content="webrtc中rtcp反馈与码率控制模块分析[TOC]
-0. 参考文档[1] google congestion control
+<meta property="og:description" content="0. 参考文档[1] google congestion control
 1. 简介webrtc的带宽估计分为两部分，一部分为发送端根据rtcp反馈信息进行反馈，另一部分为接收端根据收到的rtp数据进行相应的码率估计[1]。本文先分析发送端根据rtcp反馈信息进行码率调整的部分代码。
 
 具体计算公式:
 2. 代码结构2.1 类关系
-rtp_s">
+rtp_stream_receiver中有一个继承自抽象类RtpR">
 <meta property="og:image" content="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/google_congestion_control_architecture.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/rtcp_feedback.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/rtcp_feedback_class.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/rtcp_feedback_flow.png">
-<meta property="og:updated_time" content="2017-05-09T03:23:54.000Z">
+<meta property="og:updated_time" content="2017-05-09T03:27:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webrtc中rtcp码率控制分析">
-<meta name="twitter:description" content="webrtc中rtcp反馈与码率控制模块分析[TOC]
-0. 参考文档[1] google congestion control
+<meta name="twitter:description" content="0. 参考文档[1] google congestion control
 1. 简介webrtc的带宽估计分为两部分，一部分为发送端根据rtcp反馈信息进行反馈，另一部分为接收端根据收到的rtp数据进行相应的码率估计[1]。本文先分析发送端根据rtcp反馈信息进行码率调整的部分代码。
 
 具体计算公式:
 2. 代码结构2.1 类关系
-rtp_s">
+rtp_stream_receiver中有一个继承自抽象类RtpR">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/google_congestion_control_architecture.png">
   
     <link rel="alternative" href="/atom.xml" title="近卫高地" type="application/atom+xml">
@@ -200,8 +197,7 @@ rtp_s">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="webrtc中rtcp反馈与码率控制模块分析"><a href="#webrtc中rtcp反馈与码率控制模块分析" class="headerlink" title="webrtc中rtcp反馈与码率控制模块分析"></a>webrtc中rtcp反馈与码率控制模块分析</h1><p>[TOC]</p>
-<h1 id="0-参考文档"><a href="#0-参考文档" class="headerlink" title="0. 参考文档"></a>0. 参考文档</h1><p>[1] <a href="http://c3lab.poliba.it/images/6/65/Gcc-analysis.pdf" target="_blank" rel="external">google congestion control</a></p>
+        <h1 id="0-参考文档"><a href="#0-参考文档" class="headerlink" title="0. 参考文档"></a>0. 参考文档</h1><p>[1] <a href="http://c3lab.poliba.it/images/6/65/Gcc-analysis.pdf" target="_blank" rel="external">google congestion control</a></p>
 <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h1><p>webrtc的带宽估计分为两部分，一部分为发送端根据rtcp反馈信息进行反馈，另一部分为接收端根据收到的rtp数据进行相应的码率估计[<a href="[http://c3lab.poliba.it/images/6/65/Gcc-analysis.pdf]">1</a>]。<br>本文先分析发送端根据rtcp反馈信息进行码率调整的部分代码。</p>
 <p><img src="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/google_congestion_control_architecture.png" alt=""></p>
 <p>具体计算公式:<br><img src="https://raw.githubusercontent.com/MeRcy-PM/PIC/master/webrtc/rtcp_feedback.png" alt=""></p>
